@@ -7,7 +7,7 @@ import SideMenu from 'react-native-side-menu';
 export default class App extends React.Component {
   render() {
     return (
-      <AppNavigator />
+      <AppNavigator /> 
     );
   }
 }
