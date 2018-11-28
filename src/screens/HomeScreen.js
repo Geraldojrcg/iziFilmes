@@ -11,6 +11,7 @@ import {
   FlatList,
 } from 'react-native';
 import api from '../services/api';
+import axios from 'axios';
 
 export default class HomeScreen extends React.Component {
     static navigationOptions = {
@@ -22,6 +23,7 @@ export default class HomeScreen extends React.Component {
     };
     state = {
       docs: [],
+      images: [],
       page: 1,
       info: {},
     };
@@ -32,6 +34,8 @@ export default class HomeScreen extends React.Component {
       try{
         const response =  await api.get(`/films?page=${page}`);
         const { docs, ...info } = response.data;
+       
+
         this.setState({
           docs: [...this.state.docs, ...docs],
           info,
