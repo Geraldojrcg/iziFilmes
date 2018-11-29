@@ -24,22 +24,23 @@ export default class HomeScreen extends React.Component {
     state = {
       docs: [],
       images: [],
-      page: 1,
-      info: {},
     };
     componentDidMount(){
       this.loadFilms();
     }
-    loadFilms = async (page = 1) =>{
+    loadFilms = async () =>{
       try{
-        const response =  await api.get(`/films?page=${page}`);
-        const { docs, ...info } = response.data;
-       
-
-        this.setState({
-          docs: [...this.state.docs, ...docs],
-          info,
-          page,
+        await api.get(`/films`).then(response =>{
+          const docs = response.data;
+          docs.forEach(film => {
+            if(film.cape_url){
+              cape = film.cape_url.split("/");
+              film.cape = `http://10.2.1.173:3001/capes/${cape[1]}`;
+            }
+          });
+          this.setState({
+            docs: docs,
+          });
         });
       } catch (error){
         console.log(error);
@@ -48,17 +49,14 @@ export default class HomeScreen extends React.Component {
 
     renderItem = ({item}) => (
       <View style={styles.filmContainer}>
+        <Image
+          style={styles.cape}
+          source={{uri: item.cape}}
+        />
         <Text style={styles.filmTitle}>{item.title}</Text>
         <Text style={styles.filmDesc}>{item.description}</Text>
       </View>
     );
-
-    loadMore = () => {
-      const {page, info} = this.state;
-      if (page === info.pages) return;
-      const pageNumber = page + 1;
-      this.loadFilms(pageNumber);
-    };
 
     render() {
       const {navigate} = this.props.navigation;
@@ -67,10 +65,8 @@ export default class HomeScreen extends React.Component {
             <FlatList
               contentContainerStyle={styles.list}
               data={this.state.docs}
-              keyExtractor={item => item._id}
+              keyExtractor={(item, index) => index.toString()}
               renderItem={this.renderItem}
-              onEndReached={this.loadMore}
-              onEndReachedThreshold={0.1}
             />
         </View>
       );
@@ -102,5 +98,9 @@ export default class HomeScreen extends React.Component {
       color: "#999",
       marginTop: 5,
       textAlign: "justify",
+    },
+    cape:{
+      width: 100,
+      height: 100, 
     }
   });
