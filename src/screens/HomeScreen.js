@@ -49,13 +49,13 @@ export default class HomeScreen extends React.Component {
     renderItem = ({item}) => (
       <View style={styles.filmContainer}>
         <Grid>
-          <Col size={1}>
+          <Col style={{width: '40%'}}>
             <Image
               style={styles.cape}
               source={{uri: item.cape}}
             />
           </Col>
-          <Col size={1.5}>
+          <Col style={{width: '60%'}}>
             <Text style={styles.filmTitle}>{item.title}</Text>
             <Text numberOfLines={4} style={styles.filmDesc}>{item.description}</Text>
             <Text style={styles.dateRelease}>Ano de Lançamento: {item.date_release}</Text>
@@ -83,7 +83,7 @@ export default class HomeScreen extends React.Component {
       backgroundColor: "#f5f5f5",
     },
     list:{
-      padding: 20
+      padding: 5
     },
     filmContainer:{
       backgroundColor: "#FFF",
@@ -105,8 +105,8 @@ export default class HomeScreen extends React.Component {
       textAlign: "justify",
     },
     cape:{
-      width: 110,
-      height: 140,
+      width: 100,
+      height: 130,
       padding: 2
     },
     dateRelease:{
