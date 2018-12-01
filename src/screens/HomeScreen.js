@@ -10,12 +10,12 @@ import {
   View,
   FlatList,
 } from 'react-native';
+import { Col, Row, Grid } from "react-native-easy-grid";
 import api from '../services/api';
-import axios from 'axios';
 
 export default class HomeScreen extends React.Component {
     static navigationOptions = {
-      title: 'Home',
+      title: 'Filmes',
       headerTintColor: '#ffffff',
       headerStyle: {
         backgroundColor: '#2F95D6',
@@ -23,7 +23,6 @@ export default class HomeScreen extends React.Component {
     };
     state = {
       docs: [],
-      images: [],
     };
     componentDidMount(){
       this.loadFilms();
@@ -35,7 +34,7 @@ export default class HomeScreen extends React.Component {
           docs.forEach(film => {
             if(film.cape_url){
               cape = film.cape_url.split("/");
-              film.cape = `http://10.2.1.173:3001/capes/${cape[1]}`;
+              film.cape = `http://192.168.0.26:3001/capes/${cape[1]}`;
             }
           });
           this.setState({
@@ -49,17 +48,23 @@ export default class HomeScreen extends React.Component {
 
     renderItem = ({item}) => (
       <View style={styles.filmContainer}>
-        <Image
-          style={styles.cape}
-          source={{uri: item.cape}}
-        />
-        <Text style={styles.filmTitle}>{item.title}</Text>
-        <Text style={styles.filmDesc}>{item.description}</Text>
+        <Grid>
+          <Col size={1}>
+            <Image
+              style={styles.cape}
+              source={{uri: item.cape}}
+            />
+          </Col>
+          <Col size={1.5}>
+            <Text style={styles.filmTitle}>{item.title}</Text>
+            <Text numberOfLines={4} style={styles.filmDesc}>{item.description}</Text>
+            <Text style={styles.dateRelease}>Ano de Lançamento: {item.date_release}</Text>
+          </Col>
+        </Grid>
       </View>
     );
 
     render() {
-      const {navigate} = this.props.navigation;
       return (
         <View style={styles.container}>
             <FlatList
@@ -75,7 +80,7 @@ export default class HomeScreen extends React.Component {
   const styles = StyleSheet.create({
     container:{
       flex: 1,
-      backgroundColor: "#f5f5f5"
+      backgroundColor: "#f5f5f5",
     },
     list:{
       padding: 20
@@ -85,7 +90,7 @@ export default class HomeScreen extends React.Component {
       borderWidth: 1,
       borderColor: "#DDD",
       borderRadius: 5,
-      padding: 20,
+      padding: 10,
       marginBottom: 20,
     },
     filmTitle:{
@@ -100,7 +105,14 @@ export default class HomeScreen extends React.Component {
       textAlign: "justify",
     },
     cape:{
-      width: 100,
-      height: 100, 
+      width: 110,
+      height: 140,
+      padding: 2
+    },
+    dateRelease:{
+      fontSize: 14,
+      color: "#333",
+      marginTop: 15,
+      textAlign: "justify",
     }
   });
