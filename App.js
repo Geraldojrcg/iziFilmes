@@ -1,12 +1,11 @@
-import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import React, { Component } from 'react';
 import AppNavigator from './src/navigation/appNavigator';
-import './src/config/StatusBarConfig'
+import './src/config/StatusBarConfig';
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <AppNavigator /> 
-    );
+export default class App extends Component {
+    render() {
+      return (
+        <AppNavigator/>
+      );
+    }
   }
-}

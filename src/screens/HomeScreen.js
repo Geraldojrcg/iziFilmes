@@ -1,26 +1,27 @@
-import React from 'react';
+import React , {Component} from 'react';
 import {
   Image,
   Platform,
   ScrollView,
   StyleSheet,
   Text,
-  Button,
   TouchableOpacity,
   View,
   FlatList,
+  Button,
 } from 'react-native';
+import { Constants } from 'expo';
 import { Col, Row, Grid } from "react-native-easy-grid";
 import api from '../services/api';
+import {Container, Header, Left, Right, Body, Icon, Title} from 'native-base';
 
-export default class HomeScreen extends React.Component {
+export default class HomeScreen extends Component{
+
     static navigationOptions = {
-      title: 'Filmes',
-      headerTintColor: '#ffffff',
-      headerStyle: {
-        backgroundColor: '#2F95D6',
-      },
-    };
+      drawerLabel: 'Home',
+      drawerIcon: ({ tintColor }) =>  <Icon name="md-user" size={30} color="#900" />,
+    }
+
     state = {
       docs: [],
     };
@@ -45,7 +46,6 @@ export default class HomeScreen extends React.Component {
         console.log(error);
       }
     };
-
     renderItem = ({item}) => (
       <View style={styles.filmContainer}>
         <Grid>
@@ -66,14 +66,15 @@ export default class HomeScreen extends React.Component {
 
     render() {
       return (
-        <View style={styles.container}>
+          <View style={styles.container}>
+            
             <FlatList
               contentContainerStyle={styles.list}
               data={this.state.docs}
               keyExtractor={(item, index) => index.toString()}
               renderItem={this.renderItem}
             />
-        </View>
+          </View>
       );
     }
   }
@@ -114,5 +115,5 @@ export default class HomeScreen extends React.Component {
       color: "#333",
       marginTop: 15,
       textAlign: "justify",
-    }
+    },
   });
