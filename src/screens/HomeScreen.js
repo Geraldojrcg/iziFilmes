@@ -13,18 +13,18 @@ import {
 import { Constants } from 'expo';
 import { Col, Row, Grid } from "react-native-easy-grid";
 import api from '../services/api';
-import {Container, Header, Left, Right, Body, Icon, Title} from 'native-base';
+import {Container, Header, Left, Body, Icon, Title} from 'native-base';
+import { DrawerActions } from 'react-navigation-drawer';
 
 export default class HomeScreen extends Component{
-
-    static navigationOptions = {
-      drawerLabel: 'Home',
-      drawerIcon: ({ tintColor }) =>  <Icon name="md-user" size={30} color="#900" />,
-    }
-
     state = {
       docs: [],
     };
+
+    static navigationOptions = {
+      headerTitle: "FIlmes"
+    };
+
     componentDidMount(){
       this.loadFilms();
     }
@@ -66,15 +66,23 @@ export default class HomeScreen extends Component{
 
     render() {
       return (
-          <View style={styles.container}>
-            
-            <FlatList
-              contentContainerStyle={styles.list}
-              data={this.state.docs}
-              keyExtractor={(item, index) => index.toString()}
-              renderItem={this.renderItem}
-            />
-          </View>
+        <View style={styles.container}>
+          <View style={{height: 24, backgroundColor: "blue"}} />
+          <Header>
+            <Left>
+              <Icon name="md-menu" style={{color:"white"}} onPress={()=>{this.props.navigation.dispatch(DrawerActions.toggleDrawer())}}></Icon>
+            </Left>
+            <Body>
+              <Title>Filmes</Title>
+            </Body>
+          </Header>
+          <FlatList
+            contentContainerStyle={styles.list}
+            data={this.state.docs}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={this.renderItem}
+          />
+        </View>
       );
     }
   }
@@ -116,4 +124,5 @@ export default class HomeScreen extends Component{
       marginTop: 15,
       textAlign: "justify",
     },
+    
   });

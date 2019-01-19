@@ -1,6 +1,7 @@
 import React from 'react';
 import {createAppContainer, createStackNavigator, createDrawerNavigator} from 'react-navigation';
 import HomeScreen from '../screens/HomeScreen'
+import UserScreen from '../screens/UserScreen'
 import {Icon} from 'native-base';
 
 const Drawer = createAppContainer(
@@ -8,19 +9,34 @@ const Drawer = createAppContainer(
       Home: {
         screen: HomeScreen,
       },
+      User: {
+        screen: UserScreen
+      }
     })
 );
 
-Drawer.navigationOptions = {
-  title: "Filmes",
-  headerTintColor: '#2F95D6',
-  headerLeft: (
-    <Icon name="md-menu" size={30} style={{marginLeft: 5}}/>
-  ),
-};
-
-export default createAppContainer(
-    createStackNavigator({
-      Home:{screen: Drawer},
-    })
+const Stack = createAppContainer(
+  createStackNavigator({
+      Drawer: {
+        screen: Drawer,
+      },
+  },
+  {
+    headerMode: 'none',
+    navigationOptions: {
+      headerVisible: false,
+    }
+   })
 );
+
+/*Drawer.navigationOptions = {
+  headerStyle: {
+    backgroundColor: '#f4511e',
+  },
+  headerTintColor: '#fff',
+  headerTitleStyle: {
+    fontWeight: 'bold',
+  },
+}*/
+
+export default Stack;
