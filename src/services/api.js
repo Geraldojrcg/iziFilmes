@@ -1,7 +1,9 @@
 import axios from 'axios';
 
-const api = axios.create({
-    baseURL: 'http://192.168.0.26:3001/api',
+var api = axios.create({
+    baseURL: 'https://izifilmsapi.herokuapp.com/api',
 });
 
-export default api;
+var cape_url = "https://izifilmsapi.herokuapp.com/capes/";
+
+export {api, cape_url};

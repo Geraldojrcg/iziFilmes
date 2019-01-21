@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import AppNavigator from './src/navigation/appNavigator';
-import './src/config/StatusBarConfig';
 import { Font, AppLoading } from "expo";
 
 export default class App extends Component {

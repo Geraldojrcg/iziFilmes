@@ -1,42 +1,66 @@
 import React from 'react';
-import {createAppContainer, createStackNavigator, createDrawerNavigator} from 'react-navigation';
-import HomeScreen from '../screens/HomeScreen'
-import UserScreen from '../screens/UserScreen'
-import {Icon} from 'native-base';
+import { Image } from 'react-native';
+import {createAppContainer, createStackNavigator, createDrawerNavigator, DrawerItems} from 'react-navigation';
+import HomeScreen from '../screens/HomeScreen';
+import UserScreen from '../screens/UserScreen';
+import FilmDetailScreen from '../screens/FilmDetailScreen';
+import {Container, Header, Left, Body, Icon, Title, Content} from 'native-base';
+
+const HomeStack = createAppContainer(
+  createStackNavigator({
+    Home: {
+      screen: HomeScreen,
+    },
+    FilmDetailScreen: {
+      screen: FilmDetailScreen
+    }
+  })
+);
+
+const UserStack = createAppContainer(
+  createStackNavigator({
+    User: {
+      screen: UserScreen
+    }
+  })
+);
+
+const CustomContentComponentDrawer = (props) => (
+  <Container>
+    <Header style={{height: 200, backgroundColor:"#003eb2"}}>
+      <Body style={{flex: 1, alignItems: "center", justifyContent: "center", marginTop: 10}}>
+        <Image
+          style={{borderRadius:60}}
+          source={require('../../assets/popcorn.png')}
+          ></Image>
+          <Title>iziFilms</Title>
+      </Body>
+    </Header>
+    <Content>
+      <DrawerItems {...props}/>
+    </Content>
+  </Container>
+)
 
 const Drawer = createAppContainer(
   createDrawerNavigator({
       Home: {
-        screen: HomeScreen,
+        screen: HomeStack,
+        navigationOptions:{
+          drawerIcon: (<Icon name="md-film"></Icon>),
+          drawerLabel: "Filmes",
+        }
       },
       User: {
-        screen: UserScreen
+        screen: UserStack,
+        navigationOptions:{
+          drawerIcon: (<Icon name="md-people"></Icon>),
+          drawerLabel: "Usuário",
+        }
       }
+    },{
+      contentComponent: CustomContentComponentDrawer
     })
 );
 
-const Stack = createAppContainer(
-  createStackNavigator({
-      Drawer: {
-        screen: Drawer,
-      },
-  },
-  {
-    headerMode: 'none',
-    navigationOptions: {
-      headerVisible: false,
-    }
-   })
-);
-
-/*Drawer.navigationOptions = {
-  headerStyle: {
-    backgroundColor: '#f4511e',
-  },
-  headerTintColor: '#fff',
-  headerTitleStyle: {
-    fontWeight: 'bold',
-  },
-}*/
-
-export default Stack;
+export default Drawer;

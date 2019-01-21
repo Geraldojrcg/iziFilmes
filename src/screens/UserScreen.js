@@ -10,22 +10,23 @@ import {
   FlatList,
   Button,
 } from 'react-native';
-import {Container, Header, Left, Body, Icon, Title} from 'native-base';
+import { Icon } from 'native-base';
 import { DrawerActions } from 'react-navigation-drawer';
 
-export default class HomeScreen extends Component{
+export default class UserScreen extends Component{
+
+    static navigationOptions = ({navigation}) => ({
+      title: 'User',
+      headerLeft: (<Icon name="md-menu" style={{ color: 'white', marginLeft: 20}} onPress={()=>{navigation.dispatch(DrawerActions.toggleDrawer())}}></Icon>),
+      headerStyle: {
+        backgroundColor: '#003eb2',
+      },
+      headerTintColor: '#fff',
+    });
+
     render() {
       return (
         <View style={styles.container}>
-          <View style={{height: 24, backgroundColor: "blue"}} />
-          <Header>
-            <Left>
-              <Icon name="md-menu" style={{color:"white"}} onPress={()=>{this.props.navigation.dispatch(DrawerActions.toggleDrawer())}}></Icon>
-            </Left>
-            <Body>
-              <Title>User</Title>
-            </Body>
-          </Header>
           <View>
               <Text>User</Text>
           </View>
